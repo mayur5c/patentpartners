@@ -1,88 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Patent Partners</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: #fff;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-        .container {
-            text-align: center;
-            background: rgba(0,0,0,0.4);
-            padding: 40px 30px;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-        }
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-        }
-        p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-        }
-        .countdown {
-            font-size: 2rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-        }
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px 10px;
-            }
-            h1 {
-                font-size: 2rem;
-            }
-            .countdown {
-                font-size: 1.2rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Patent Partners</title>
+  <link rel="icon" href="./favicon.png" type="image/x-icon">
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #743ca1, #743ca1);
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #50a767;
+      color: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    input[type="email"] {
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 5px;
+      width: 250px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-left: 10px;
+      background-color: #fff;
+      color: #4a148c;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #f3e5f5;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Coming Soon</h1>
-        <p>Our website is under construction. We'll be here soon with our new awesome site.</p>
-        <div class="countdown" id="countdown"></div>
-        <p>Stay tuned!</p>
-    </div>
-    <script>
-        // Set the launch date (YYYY-MM-DDTHH:MM:SS)
-        const launchDate = new Date('2025-08-01 00:00:00').getTime();
 
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = launchDate - now;
+  <div class="container">
+    <h1>Coming Soon</h1>
+    <p>Our website is under construction. We'll be here soon with our new awesome site.</p>
+    <p>Drop your work email to get notified</p>
+    <input type="email" id="emailInput" placeholder="you@company.com" />
+    <button onclick="saveEmail()">Notify Me</button>
+  </div>
 
-            if (distance < 0) {
-                document.getElementById('countdown').innerHTML = "We will be Live Soon!";
-                return;
-            }
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  <!-- Firebase Config and Logic -->
+  <script>
+    // Replace with your own Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyCReel2nQG6CjjEt82M4lO9mAoylCxxdUM",
+      authDomain: "email-collection-form.firebaseapp.com",
+      projectId: "email-collection-form",
+      storageBucket: "email-collection-form.firebasestorage.app",
+      messagingSenderId: "108653106199",
+      appId: "1:108653106199:web:d5805f3abb19479d76b852"
+    };
 
-            document.getElementById('countdown').innerHTML =
-                days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-        }
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
-    </script>
+    function saveEmail() {
+      const email = document.getElementById("emailInput").value.trim();
+
+      if (!email || !validateEmail(email)) {
+        alert("Please enter a valid email.");
+        return;
+      }
+
+      db.collection("notifyList").add({
+        email: email,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        alert("Thank you! You'll be notified when we launch.");
+        document.getElementById("emailInput").value = "";
+      }).catch((error) => {
+        console.error("Error adding email: ", error);
+        alert("Something went wrong. Please try again.");
+      });
+    }
+
+    function validateEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(String(email).toLowerCase());
+    }
+  </script>
+
 </body>
 </html>

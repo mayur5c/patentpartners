@@ -1,80 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Patent Partners</title>
-  <link rel="icon" href="./favicon.png" type="image/x-icon">
+  <meta charset="UTF-8">
+  <title>Onboard Early | Landing</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    /* General Resets */
     body {
-      background: linear-gradient(to bottom right, #743ca1, #743ca1);
-      font-family: Arial, sans-serif;
+      margin: 0;
+      font-family: 'Inter', Arial, sans-serif;
+      background: #fff;
+      color: #232323;
+    }
+
+    /* Header / Navbar */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #23212c;
+      padding: 0 3rem;
+      height: 60px;
+    }
+    .navbar-left {
+      display: flex;
+      align-items: center;
+    }
+    .navbar-logo {
+      width: 38px;
+      height: 38px;
+      background: #fff;
+      border-radius: 50%;
+      margin-right: 20px;
+      object-fit: cover;
+    }
+    .navbar-links a {
+      color: #e8e6ea;
+      text-decoration: none;
+      font-size: 1rem;
+      margin-right: 20px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .navbar-links a:last-child {
+      margin-right: 0;
+      color: #bdb8c7;
+      font-weight: 400;
+    }
+    .navbar-actions {
+      display: flex;
+      align-items: center;
+    }
+    .navbar-actions button,
+    .navbar-actions .contact-btn {
+      font-size: 1rem;
+      border-radius: 6px;
+      border: none;
+      padding: 7px 20px;
+      margin-left: 10px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .navbar-actions button {
+      background: transparent;
+      color: #e8e6ea;
+      border: 1px solid #393754;
+      transition: background 0.2s;
+    }
+    .navbar-actions button:hover {
+      background: #393754;
+    }
+    .navbar-actions .contact-btn {
+      background: #743ca1;
+      color: #ffffff;
+      font-weight: 600;
+      border: none;
+      transition: background 0.2s;
+    }
+    .navbar-actions .contact-btn:hover {
+      background: #a28ab5;
+    }
+
+    /* Main Content */
+    .main-section {
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      margin: 0;
+      min-height: 80vh;
+      padding: 4rem 2rem 0 2rem;
+      background: linear-gradient(to bottom right, #fff 80%, #743ca1 15% 100%);
+      position: relative;
     }
-    .container {
-      background: transparent;
+    .main-img {
+      width: 740px;
+      height: 860px;
+      border-radius: 8px;
+      object-fit: cover;
+      box-shadow: 0 10px 26px 0 rgba(0,0,0,0.09);
+      background: #ffe083;
+      margin-right: 48px;
+      flex-shrink: 0;
+    }
+    .main-content {
+      max-width: 520px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .main-title {
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: #23212c;
+      margin-bottom: 18px;
+      line-height: 1.14;
+      letter-spacing: 0.01em;
+    }
+    .main-desc {
+      font-size: 1.04rem;
+      color: #313333;
+      margin-bottom: 1.8rem;
+      line-height: 1.7;
+    }
+    .join-btn {
+      padding: 10px 30px;
+      border-radius: 8px;
+      border: none;
+      background: #23212c;
       color: #fff;
-      padding: 40px;
-      border-radius: 15px;
-      text-align: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-    }
-    input[type="email"] {
-      padding: 10px;
-      font-size: 16px;
-      margin-top: 15px;
-      border: none;
-      border-radius: 5px;
-      width: 250px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      margin-left: 10px;
-      background-color: #fff;
-      color: #4a148c;
-      border: none;
-      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: 600;
+      box-shadow: 0 2px 8px 0 rgba(30,21,60,0.05);
       cursor: pointer;
+      transition: background 0.2s;
     }
-    button:hover {
-      background-color: #f3e5f5;
+    .join-btn:hover {
+      background: #393754;
+    }
+
+    /* Email Input */
+    #emailInput {
+      width: 100%;
+      max-width: 300px;
+      padding: 12px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-bottom: 16px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    
+    #emailInput:focus {
+      border-color: #743ca1;
+    }
+    
+    #emailInput::placeholder {
+      color: #999;
+    }
+
+    /* Date */
+    .current-date {
+      margin-top: 24px;
+      font-size: 0.98rem;
+      color: #7d7d7d;
+      font-style: italic;
+    }
+
+    @media (max-width: 900px) {
+      .main-section {
+        flex-direction: column;
+        padding-top: 2rem;
+      }
+      .main-img {
+        margin-right: 0;
+        margin-bottom: 33px;
+        width: 255px;
+        height: 300px;
+      }
+      .main-content {
+        max-width: 99vw;
+        align-items: center;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .navbar {
+        padding: 0 0.8rem;
+      }
+      .main-section {
+        padding: 2rem 0.1rem 0 0.1rem;
+      }
+      .main-content {
+        padding-left: 0;
+        padding-right: 0;
+      }
+      .main-img {
+        width: 94vw;
+        height: 180px;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-left">
+      <img src="favicon.png" alt="Logo" class="navbar-logo">
+      <div class="navbar-links">
+        <a href="#">Home</a>
+        <a href="#">Join Us</a>
+      </div>
+    </div>
+    <div class="navbar-actions">
+      <button>Sign in</button>
+      <a href="#contact"><button class="contact-btn">Contact Us</button></a>
+    </div>
+  </nav>
 
-  <div class="container">
-    <!-- <h1>Mission Patent Monetization - Platform & Ecosystem</h1>
-    <br>
-
-    </br>
+  <!-- Main Section -->
+  <main class="main-section">
+    <img 
+      src="logo.png"
+      alt="Trophy"
+      class="main-img"
+    >
+    <section class="main-content">
+      <div class="main-title">Be Among The First Ones<br>To Get On Board With Us</div>
+      <div class="main-desc">
+        
+        No marketing gimmicks here!
+      </div>
     
-    <h2>To help innovators and patent holders commercialise & monetize their patents</h2></li>
-    <h2>To increase awareness for industries, corporates, SMEs and start-ups about promising patents available for adoption</h2>
-    <h2>To help India achieve a scale of 50x in terms of IP export value!</h2>
-    <h2>And we are just getting started!</h2>
-    <br>
-    <h2>Drop your work email (in the box below) to get notified and updated</h2>
-  
-    <br> -->
-    <img src="./Mission Patent.png" alt="Patent Partners Logo" style="width: 420px; height: auto; margin-bottom: 20px;" />
-    <br>
-    <input type="email" id="emailInput" placeholder="you@yourcompany.com" />
-    <button onclick="saveEmail()">Notify Me</button>
-  </div>
+      <input type="email" id="emailInput" placeholder="you@yourcompany.com" />
+      <br>
+      <button class="join-btn" onclick="saveEmail()">Notify Me</button>
+    </section>
+  </main>
 
   <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
+    import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
 
-  <!-- Firebase Config and Logic -->
-  <script>
-    // Replace with your own Firebase config
+    // Your web app's Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyCReel2nQG6CjjEt82M4lO9mAoylCxxdUM",
       authDomain: "email-collection-form.firebaseapp.com",
@@ -84,10 +254,12 @@
       appId: "1:108653106199:web:d5805f3abb19479d76b852"
     };
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-    function saveEmail() {
+    // Make saveEmail function globally available
+    window.saveEmail = async function() {
       const email = document.getElementById("emailInput").value.trim();
 
       if (!email || !validateEmail(email)) {
@@ -95,16 +267,17 @@
         return;
       }
 
-      db.collection("notifyList").add({
-        email: email,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      }).then(() => {
+      try {
+        await addDoc(collection(db, "notifyList"), {
+          email: email,
+          timestamp: serverTimestamp()
+        });
         alert("Thank you! You'll be notified when we launch.");
         document.getElementById("emailInput").value = "";
-      }).catch((error) => {
+      } catch (error) {
         console.error("Error adding email: ", error);
         alert("Something went wrong. Please try again.");
-      });
+      }
     }
 
     function validateEmail(email) {
@@ -112,6 +285,71 @@
       return re.test(String(email).toLowerCase());
     }
   </script>
+
+   <!-- Contact Us Section with Company Details -->
+<section class="contact-info-section" id="contact">
+  <h2>Contact Us</h2>
+  <div class="company-contact-details">
+    <div class="company-detail-item">
+      <strong>Company:</strong> Nanosafe Solutions Pvt. Ltd.
+    </div>
+    <div class="company-detail-item">
+      <strong>Address:</strong> 506 A , DPSRU Innovation and Incubation Foundation. Pushp Vihar, Mehrauli - Badarpur Rd, opp. Sainik Farm, Sector 3, Tughlakabad, New Delhi, Delhi 110017, India
+    </div>
+    <div class="company-detail-item">
+      <strong>Phone:</strong> <a href="tel:+91 92200 35559">+91 92200 35559</a>
+    </div>
+    <div class="company-detail-item">
+      <strong>Email:</strong> <a href="mailto:mayur@nanosafesolutions.com"> mayur@nanosafesolutions.com</a>
+    </div>
+ </div>
+</section>
+<style>
+.contact-info-section {
+  max-width: 500px;
+  margin: 60px auto 40px auto;
+  padding: 32px 28px 28px 28px;
+  background: #743ca1;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px 0 rgba(30,21,60,0.09);
+}
+.contact-info-section h2 {
+  margin-bottom: 22px;
+  text-align: center;
+  color: #ffffff;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.company-contact-details {
+  font-size: 1.08rem;
+  color: #ffffff;
+  line-height: 1.7;
+}
+
+.company-detail-item {
+  margin-bottom: 14px;
+}
+
+.company-detail-item a {
+  color: #efeef3;
+  text-decoration: underline;
+  transition: color 0.18s;
+}
+
+.company-detail-item a:hover {
+  color: #ffc125;
+}
+
+@media (max-width:600px) {
+  .contact-info-section {
+    padding: 18px 8vw;
+    font-size: 0.99rem;
+  }
+}
+</style>
+
+
 
 </body>
 </html>
